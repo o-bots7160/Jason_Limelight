@@ -22,6 +22,14 @@ public class Robot extends TimedRobot {
   NetworkTableEntry tv = table.getEntry("tv");
   NetworkTableEntry camTran = table.getEntry("camtran");
   double x = 0;
+  double height = 0;
+  double width = 0;
+  double dist = 0;
+  static double heightPixelConstant = 0; //conversion factor of pixels to inches
+  static double widthPixelConstant = 0; //conversion factor of pixels to inches
+  static double heightInchConstant = 5.75; //actual height of object in inches
+  static double widthInchConstant = 14; //actual width of object in inches
+
   
 
 
@@ -37,24 +45,23 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousInit() {
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
-  }
-
-  @Override
-  public void autonomousPeriodic() {
-  }
-
-  @Override
-  public void teleopInit() {
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);
-  }
-
-  @Override
-  public void teleopPeriodic() {
+  public void robotPeriodic(){
     x = tx.getDouble(0.0);
     double Kp = 0.1;
     double min_command = 0.05;
+    height = tvert.getDouble(0.0);
+    width = thor.getDouble(0.0);
+    if (height > 0 && width > 0){
+      dist = (heightPixelConstant*heightInchConstant/height + widthPixelConstant*widthInchConstant/width)/2;
+    } else if(height > 0){
+      dist = heightPixelConstant*heightInchConstant/height;
+    } else if(width > 0){
+      dist = widthPixelConstant*widthInchConstant/width;
+    } else{
+      dist = 0.0;
+    }
+    SmartDashboard.putNumber("limelightHeight", height);
+    SmartDashboard.putNumber("limelightWidth", width);
 
     if (_joystick.getRawButton(1)){
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(2);
@@ -79,6 +86,25 @@ public class Robot extends TimedRobot {
     }else{
       drive.run(_joystick.getY(), _joystick.getZ());
     }
+  }
+
+  @Override
+  public void autonomousInit() {
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+  }
+
+  @Override
+  public void autonomousPeriodic() {
+  }
+
+  @Override
+  public void teleopInit() {
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);
+  }
+
+  @Override
+  public void teleopPeriodic() {
+    
 
 
   }
