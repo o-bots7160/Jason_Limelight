@@ -68,25 +68,42 @@ public class Robot extends TimedRobot {
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(2);
       double steering_adjust = 0.0;
       double heading_error = -x;
+      double max_driveSpeed = 1.0;
+      double desired_distance = 20;
+      double driving_adjust = 0;
+      if (dist > 20){
+        driving_adjust = Kp*(dist - desired_distance);
+        if (driving_adjust > max_driveSpeed){
+          driving_adjust = max_driveSpeed;
+        }
+      }
       if (x > 1.0){
         steering_adjust = Kp*heading_error - min_command;
       }else if (x < 1.0){
         steering_adjust = Kp*heading_error + min_command;
       }
-      drive.turnToTarget((_joystick.getY()/1.5)*-1, -steering_adjust);
+      drive.turnToTarget((_joystick.getY()*(-1)*driving_adjust), -steering_adjust);
     }else if(_joystick.getRawButton(2)){
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(3);
       double steering_adjust = 0.0;
       double heading_error = -x;
+      double max_driveSpeed = 1.0;
+      double desired_distance = 20;
+      double driving_adjust = 0;
+      if (dist > 20){
+        driving_adjust = Kp*(dist - desired_distance);
+        if (driving_adjust > max_driveSpeed){
+          driving_adjust = max_driveSpeed;
+        }
       if (x > 1.0){
         steering_adjust = Kp*heading_error - min_command;
       }else if (x < 1.0){
         steering_adjust = Kp*heading_error + min_command;
       }
-      drive.turnToTarget((_joystick.getY()/1.5)*-1, -steering_adjust);
+      drive.turnToTarget((_joystick.getY()*(-1)*driving_adjust), -steering_adjust);
     }else{
       drive.run(_joystick.getY(), _joystick.getZ());
-    }
+    }}
   }
 
   @Override
