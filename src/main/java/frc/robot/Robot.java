@@ -51,13 +51,9 @@ public class Robot extends TimedRobot {
     double min_command = 0.05;
     height = tvert.getDouble(0.0);
     width = thor.getDouble(0.0);
-    if (height > 0 && width > 0){
-      dist = (heightPixelConstant*heightInchConstant/height + widthPixelConstant*widthInchConstant/width)/2;
-    } else if(height > 0){
+    if(height > 0){
       dist = heightPixelConstant*heightInchConstant/height;
-    } else if(width > 0){
-      dist = widthPixelConstant*widthInchConstant/width;
-    } else{
+    }else{
       dist = 0.0;
     }
     SmartDashboard.putNumber("limelightHeight", height);
@@ -71,11 +67,18 @@ public class Robot extends TimedRobot {
       double max_driveSpeed = 1.0;
       double desired_distance = 20;
       double driving_adjust = 0;
-      if (dist > 20){
-        driving_adjust = Kp*(dist - desired_distance);
+      if (dist < 20){
+        driving_adjust = 0.0;
+      }else if (dist > 20 && dist < 40){
+        driving_adjust = .025*(dist - desired_distance);
         if (driving_adjust > max_driveSpeed){
           driving_adjust = max_driveSpeed;
         }
+      }else if(dist > 40 && dist < 60){
+        driving_adjust = .05*(dist-desired_distance);
+      }else if (dist > 60){
+          driving_adjust = max_driveSpeed;
+        
       }
       if (x > 1.0){
         steering_adjust = Kp*heading_error - min_command;
@@ -90,11 +93,18 @@ public class Robot extends TimedRobot {
       double max_driveSpeed = 1.0;
       double desired_distance = 20;
       double driving_adjust = 0;
-      if (dist > 20){
-        driving_adjust = Kp*(dist - desired_distance);
+      if (dist < 20){
+        driving_adjust = 0.0;
+      }else if (dist > 20 && dist < 40){
+        driving_adjust = .025*(dist - desired_distance);
         if (driving_adjust > max_driveSpeed){
           driving_adjust = max_driveSpeed;
         }
+      }else if(dist > 40 && dist < 60){
+        driving_adjust = .05*(dist-desired_distance);
+      }else if (dist > 60){
+          driving_adjust = max_driveSpeed; 
+      }
       if (x > 1.0){
         steering_adjust = Kp*heading_error - min_command;
       }else if (x < 1.0){
@@ -103,7 +113,7 @@ public class Robot extends TimedRobot {
       drive.turnToTarget((_joystick.getY()*(-1)*driving_adjust), -steering_adjust);
     }else{
       drive.run(_joystick.getY(), _joystick.getZ());
-    }}
+    }
   }
 
   @Override
