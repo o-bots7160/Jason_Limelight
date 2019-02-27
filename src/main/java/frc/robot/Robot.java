@@ -25,8 +25,8 @@ public class Robot extends TimedRobot {
   double height = 0;
   double width = 0;
   double dist = 0;
-  static double heightPixelConstant = 0; //conversion factor of pixels to inches
-  static double widthPixelConstant = 0; //conversion factor of pixels to inches
+  static double heightPixelConstant = 262.9565217391; //conversion factor of pixels to inches
+  static double widthPixelConstant = 264; //conversion factor of pixels to inches
   static double heightInchConstant = 5.75; //actual height of object in inches
   static double widthInchConstant = 14; //actual width of object in inches
 
@@ -62,6 +62,7 @@ public class Robot extends TimedRobot {
     }
     SmartDashboard.putNumber("limelightHeight", height);
     SmartDashboard.putNumber("limelightWidth", width);
+    SmartDashboard.putNumber("Distance", dist);
 
     if (_joystick.getRawButton(1)){
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(2);
