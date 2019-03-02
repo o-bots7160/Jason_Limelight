@@ -67,18 +67,18 @@ public class Robot extends TimedRobot {
       double max_driveSpeed = 1.0;
       double desired_distance = 20;
       double driving_adjust = 0;
-      if (dist < 20){
+      if (dist < 20)
         driving_adjust = 0.0;
-      }else if (dist > 20 && dist < 40){
+      else if (dist > 20 && dist < 40){
         driving_adjust = .025*(dist - desired_distance);
-        if (driving_adjust > max_driveSpeed){
-          driving_adjust = max_driveSpeed;
-        }
+        if (driving_adjust > max_driveSpeed/2)
+          driving_adjust = max_driveSpeed/2;
       }else if(dist > 40 && dist < 60){
         driving_adjust = .05*(dist-desired_distance);
+        if (driving_adjust > max_driveSpeed/1.5)
+          driving_adjust = max_driveSpeed/1.5;
       }else if (dist > 60){
-          driving_adjust = max_driveSpeed;
-        
+          driving_adjust = max_driveSpeed; 
       }
       if (x > 1.0){
         steering_adjust = Kp*heading_error - min_command;
@@ -93,15 +93,16 @@ public class Robot extends TimedRobot {
       double max_driveSpeed = 1.0;
       double desired_distance = 20;
       double driving_adjust = 0;
-      if (dist < 20){
+      if (dist < 20)
         driving_adjust = 0.0;
-      }else if (dist > 20 && dist < 40){
+      else if (dist > 20 && dist < 40){
         driving_adjust = .025*(dist - desired_distance);
-        if (driving_adjust > max_driveSpeed){
-          driving_adjust = max_driveSpeed;
-        }
+        if (driving_adjust > max_driveSpeed/2)
+          driving_adjust = max_driveSpeed/2;
       }else if(dist > 40 && dist < 60){
         driving_adjust = .05*(dist-desired_distance);
+        if (driving_adjust > max_driveSpeed/1.5)
+          driving_adjust = max_driveSpeed/1.5;
       }else if (dist > 60){
           driving_adjust = max_driveSpeed; 
       }
