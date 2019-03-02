@@ -28,7 +28,7 @@ public class DriveTrain{
     }
 
     public void turnToTarget(double x, double z){
-        _diffDrive.arcadeDrive(x/1.5, z/2);
+        _diffDrive.arcadeDrive(x, z/2);
     }
     
     public void reset() {

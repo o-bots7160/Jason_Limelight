@@ -73,6 +73,8 @@ public class Robot extends TimedRobot {
         driving_adjust = .025*(dist - desired_distance);
         if (driving_adjust > max_driveSpeed/2)
           driving_adjust = max_driveSpeed/2;
+        else if(driving_adjust < .4)
+          driving_adjust = .4;
       }else if(dist > 40 && dist < 60){
         driving_adjust = .05*(dist-desired_distance);
         if (driving_adjust > max_driveSpeed/1.5)
@@ -99,6 +101,8 @@ public class Robot extends TimedRobot {
         driving_adjust = .025*(dist - desired_distance);
         if (driving_adjust > max_driveSpeed/2)
           driving_adjust = max_driveSpeed/2;
+        else if(driving_adjust < .4)
+          driving_adjust = .4;
       }else if(dist > 40 && dist < 60){
         driving_adjust = .05*(dist-desired_distance);
         if (driving_adjust > max_driveSpeed/1.5)
@@ -114,6 +118,12 @@ public class Robot extends TimedRobot {
       drive.turnToTarget((_joystick.getY()*(-1)*driving_adjust), -steering_adjust);
     }else{
       drive.run(_joystick.getY(), _joystick.getZ());
+    }
+    if(_joystick.getRawButton(3)){
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+    }
+    if(_joystick.getRawButton(4)){
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
     }
   }
 
